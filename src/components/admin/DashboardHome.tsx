@@ -8,9 +8,10 @@ interface DashboardHomeProps {
     totalViews: number;
   };
   onRefresh: () => void;
+  onNavigate: (tab: string) => void;
 }
 
-export function DashboardHome({ stats, onRefresh }: DashboardHomeProps) {
+export function DashboardHome({ stats, onRefresh, onNavigate }: DashboardHomeProps) {
   const statCards = [
     {
       label: 'Total Portfolio Projects',
@@ -79,17 +80,26 @@ export function DashboardHome({ stats, onRefresh }: DashboardHomeProps) {
       <div className="bg-white rounded-xl p-8">
         <h2 className="text-2xl mb-6">Quick Actions</h2>
         <div className="grid md:grid-cols-3 gap-4">
-          <button className="p-6 border-2 border-gray-200 rounded-lg hover:border-blue-600 hover:bg-blue-50 transition text-left">
+          <button
+            onClick={() => onNavigate('portfolio')}
+            className="p-6 border-2 border-gray-200 rounded-lg hover:border-blue-600 hover:bg-blue-50 transition text-left"
+          >
             <Image className="w-8 h-8 text-blue-600 mb-3" />
             <h3 className="mb-2">Add Portfolio Project</h3>
             <p className="text-sm text-gray-600">Upload your latest design work</p>
           </button>
-          <button className="p-6 border-2 border-gray-200 rounded-lg hover:border-green-600 hover:bg-green-50 transition text-left">
+          <button
+            onClick={() => onNavigate('invoices')}
+            className="p-6 border-2 border-gray-200 rounded-lg hover:border-green-600 hover:bg-green-50 transition text-left"
+          >
             <Receipt className="w-8 h-8 text-green-600 mb-3" />
             <h3 className="mb-2">Create Invoice</h3>
             <p className="text-sm text-gray-600">Generate a new client invoice</p>
           </button>
-          <button className="p-6 border-2 border-gray-200 rounded-lg hover:border-purple-600 hover:bg-purple-50 transition text-left">
+          <button
+            onClick={() => onNavigate('testimonials')}
+            className="p-6 border-2 border-gray-200 rounded-lg hover:border-purple-600 hover:bg-purple-50 transition text-left"
+          >
             <MessageSquare className="w-8 h-8 text-purple-600 mb-3" />
             <h3 className="mb-2">Add Testimonial</h3>
             <p className="text-sm text-gray-600">Share client feedback</p>

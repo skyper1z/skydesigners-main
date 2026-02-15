@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import Masonry from 'react-responsive-masonry';
-import { X } from 'lucide-react';
 import { portfolioAPI } from '../utils/api';
 
 interface Project {
@@ -15,7 +14,6 @@ export function Portfolio() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [filter, setFilter] = useState('All');
   const [loading, setLoading] = useState(true);
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   // Default portfolio items (fallback if no projects in database)
   const portfolioItems = [
@@ -128,8 +126,7 @@ export function Portfolio() {
             {filteredProjects.map((item) => (
               <div
                 key={item.id}
-                className="relative group cursor-pointer overflow-hidden rounded-xl"
-                onClick={() => setSelectedProject(item)}
+                className="relative group overflow-hidden rounded-xl"
               >
                 <img
                   src={item.image}
@@ -147,42 +144,6 @@ export function Portfolio() {
           </Masonry>
         )}
       </div>
-
-      {/* Lightbox Modal */}
-      {selectedProject && (
-        <div
-          className="fixed inset-0 z-[5000] bg-black/95 flex items-center justify-center p-4 backdrop-blur-sm"
-          onClick={() => setSelectedProject(null)}
-        >
-
-
-          <div
-            className="relative w-full max-w-5xl max-h-[90vh] flex flex-col items-center overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="relative group/image">
-              <button
-                onClick={() => setSelectedProject(null)}
-                className="absolute top-2 right-2 z-[5010] p-2 bg-black/50 hover:bg-black/70 rounded-full text-white transition backdrop-blur-sm border border-white/20 opacity-0 group-hover/image:opacity-100 focus:opacity-100 mobile-touch:opacity-100"
-                aria-label="Close lightbox"
-              >
-                <X className="w-5 h-5" />
-              </button>
-              <img
-                src={selectedProject.image}
-                alt={selectedProject.title}
-                className="w-auto h-auto max-w-full max-h-[60vh] md:max-h-[80vh] object-contain rounded-lg shadow-2xl mx-auto"
-              />
-            </div>
-            <div className="mt-6 text-center text-white px-4">
-              <h3 className="text-xl md:text-2xl font-bold mb-2">{selectedProject.title}</h3>
-              <p className="text-gray-300 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
-                {selectedProject.description}
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 }
